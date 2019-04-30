@@ -1,7 +1,7 @@
 import 'package:fcobogo_contratos/model/contract.dart';
 import 'package:flutter/material.dart';
 import 'package:fcobogo_contratos/ui/detail/separator.dart';
-import 'package:fcobogo_contratos/ui/detail/detail_page.dart';
+import 'package:fcobogo_contratos/ui/detail/resume_page.dart';
 import 'package:fcobogo_contratos/ui/text_style.dart';
 
 class ContractSummary extends StatelessWidget {
@@ -110,7 +110,7 @@ class ContractSummary extends StatelessWidget {
         onTap: horizontal
             ? () => Navigator.of(context).push(
           new PageRouteBuilder(
-            pageBuilder: (_, __, ___) => new DetailPage(contract),
+            pageBuilder: (_, __, ___) => new ResumePage(contract),
             transitionsBuilder: (context, animation, secondaryAnimation, child) =>
             new FadeTransition(opacity: animation, child: child),
           ) ,

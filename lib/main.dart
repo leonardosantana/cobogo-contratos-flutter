@@ -1,4 +1,4 @@
-import 'package:fcobogo_contratos/ui/detail/detail_page.dart';
+import 'package:fcobogo_contratos/ui/detail/resume_page.dart';
 import 'package:fcobogo_contratos/ui/login/home_page.dart';
 import 'package:fcobogo_contratos/ui/login/login_page.dart';
 import 'package:flutter/material.dart';

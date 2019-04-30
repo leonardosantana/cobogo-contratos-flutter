@@ -1,349 +1,269 @@
+import 'package:fcobogo_contratos/docked.dart';
 import 'package:fcobogo_contratos/model/contract.dart';
-import 'package:fcobogo_contratos/ui/detail/separator.dart';
-import 'package:fcobogo_contratos/ui/common/contract_summary.dart';
-import 'package:fcobogo_contratos/ui/text_style.dart';
+import 'package:fcobogo_contratos/ui/activity/activity_screen.dart';
+import 'package:fcobogo_contratos/ui/cust/cust_screen.dart';
+import 'package:fcobogo_contratos/ui/manager/manager_screen.dart';
 import 'package:flutter/material.dart';
-
-
-class Entry {
-  Entry(this.title, [this.children = const <Entry>[]]);
-
-  final String title;
-  final List<Entry> children;
-}
-
-class EntryItem extends StatelessWidget {
-  const EntryItem(this.entry);
-
-  final Entry entry;
-
-  Widget _buildTiles(Entry root) {
-    if (root.children.isEmpty) return ListTile(title: Text(root.title));
-    return ExpansionTile(
-      key: PageStorageKey<Entry>(root),
-      title: Text(root.title),
-      children: root.children.map(_buildTiles).toList(),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _buildTiles(entry);
-  }
-}
-
-final List<Entry> data = <Entry>[
-  Entry(
-    'Chapter A',
-    <Entry>[
-      Entry(
-        'Section A0',
-        <Entry>[
-          Entry('Item A0.1'),
-          Entry('Item A0.2'),
-          Entry('Item A0.3'),
-        ],
-      ),
-      Entry('Section A1'),
-      Entry('Section A2'),
-    ],
-  ),
-  Entry(
-    'Chapter B',
-    <Entry>[
-      Entry('Section B0'),
-      Entry('Section B1'),
-    ],
-  ),
-  Entry(
-    'Chapter C',
-    <Entry>[
-      Entry('Section C0'),
-      Entry('Section C1'),
-      Entry(
-        'Section C2',
-        <Entry>[
-          Entry('Item C2.0'),
-          Entry('Item C2.1'),
-          Entry('Item C2.2'),
-          Entry('Item C2.3'),
-        ],
-      ),
-    ],
-  ),
-];
 
 class DetailPage extends StatefulWidget {
 
-  final Contract contract;
+  Contract contract;
 
-  DetailPage(this.contract);
+  DetailPage(@required this.contract);
 
   @override
-    _DetailPage createState() => new _DetailPage(contract);
+  _DetailPageState createState() => _DetailPageState(contract);
+}
+
+class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
+
+  int oldIndex = 0;
+  int mIndex = 0;
+
+  Contract contract;
+
+  _DetailPageState(@required this.contract);
+
+  final List<Widget> viewContainer = [
+    ActivityScreen(),
+    CustScreen(),
+    ManagerScreen(),
+  ];
+
+  AnimationController animationController;
+  Animation mAnimation;
+
+  void onTabTapped(int index) {
+    setState(() => oldIndex = mIndex);
+    setState(() => mIndex = index);
+    animationController.reset();
+    animationController.forward();
   }
 
-class _DetailPage extends State<DetailPage> with TickerProviderStateMixin{
+  double startX;
+  double centerX;
+  double endX;
+  double mX;
 
+  final List<Icon> iconList = [
+    new Icon(Icons.schedule),
+    new Icon(Icons.attach_money),
+    new Icon(Icons.report),
+  ];
 
-  final Contract contract;
-
-  _DetailPage(this.contract);
+  final List<Icon> fabIconList = [
+    new Icon(
+      Icons.schedule,
+      color: Colors.indigo,
+    ),
+    new Icon(
+      Icons.attach_money,
+      color: Colors.red,
+    ),
+    new Icon(
+      Icons.report,
+      color: Colors.green,
+    ),
+  ];
 
   @override
   void initState() {
     super.initState();
-    scrollController = new ScrollController();
-
+    animationController = new AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
   }
 
-  ScrollController scrollController;
-
-  var appColors = [Color.fromRGBO(231, 129, 109, 1.0),Color.fromRGBO(99, 138, 223, 1.0),Color.fromRGBO(111, 194, 173, 1.0)];
-  var cardIndex = 0;
-  AnimationController animationController;
-  ColorTween colorTween;
-  CurvedAnimation curvedAnimation;
-  var currentColor = Color.fromRGBO(231, 129, 109, 1.0);
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: new Container(
-        constraints: new BoxConstraints.expand(),
-        color: new Color(0xFF736AB7),
-        child: new Stack (
-          children: <Widget>[
-            _getBackground(),
-            _getGradient(),
-            _getContent(),
-            _getToolbar(context),
-          ],
-        ),
-      ),
-    );
-  }
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
 
-  Container _getBackground () {
-    return new Container(
-      child: new Image.network(contract.picture,
-        fit: BoxFit.cover,
-        height: 300.0,
-      ),
-      constraints: new BoxConstraints.expand(height: 300.0),
-    );
-  }
+    final double bottomAppBarWidth = width - 32.0;
 
-  Container _getGradient() {
-    return new Container(
-      margin: new EdgeInsets.only(top: 190.0),
-      height: 110.0,
-      decoration: new BoxDecoration(
-        gradient: new LinearGradient(
-          colors: <Color>[
-            new Color(0x00736AB7),
-            new Color(0xFF736AB7)
-          ],
-          stops: [0.0, 0.9],
-          begin: const FractionalOffset(0.0, 0.0),
-          end: const FractionalOffset(0.0, 1.0),
-        ),
-      ),
-    );
-  }
+    startX = new StartDocked(
+      additionalMargin: 24.0,
+    ).getOffsetX();
 
-  Widget _getContent() {
-    final _overviewTitle = "Detalhes".toUpperCase();
-    return ListView(
-      padding: EdgeInsets.fromLTRB(0.0, 72.0, 0.0, 32.0),
-      children: <Widget>[
-        ContractSummary(contract,
-          horizontal: false,
-        ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 32.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(_overviewTitle, style: Style.headerTextStyle,),
-              Separator(),
-              Text( contract.details, style: Style.commonTextStyle),
-              _getActivities()
-            ],
-          ),
-        ),
-      ],
-    );
-  }
+    centerX = new CenterDocked(
+      scaffoldSizeWidth: width - 32.0,
+      fabSizeWidth: 56.0,
+    ).getOffsetX();
 
-  Widget _getActivities(){
-    return new Container(
-      padding: new EdgeInsets.symmetric(horizontal: 32.0),
-      child: _containerList()
-    );
-  }
+    endX = new EndDocked(
+      additionalMargin: 24.0,
+      scaffoldSizeWidth: width - 32.0,
+      fabSizeWidth: 56.0,
+    ).getOffsetX();
 
-  Container _getToolbar(BuildContext context) {
-    return new Container(
-      margin: new EdgeInsets.only(
-          top: MediaQuery
-              .of(context)
-              .padding
-              .top),
-      child: new BackButton(color: Colors.white),
-    );
-  }
+    Animation animationFromStartToStart =
+    new Tween(begin: startX, end: startX).animate(animationController);
 
-  controlEnds(details){
+    Animation animationFromStartToCenter =
+    new Tween(begin: startX, end: centerX).animate(animationController);
 
-    animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    curvedAnimation = CurvedAnimation(parent: animationController, curve: Curves.fastOutSlowIn);
-    animationController.addListener(() {
-      setState(() {
-        currentColor = colorTween.evaluate(curvedAnimation);
-      });
-    });
+    Animation animationFromStartToEnd =
+    new Tween(begin: startX, end: endX).animate(animationController);
 
-    if(details.velocity.pixelsPerSecond.dx > 0) {
-      if(cardIndex>0) {
-        cardIndex--;
-        colorTween = ColorTween(begin:currentColor,end:appColors[cardIndex]);
-      }
-    }else {
-      if(cardIndex<2) {
-        cardIndex++;
-        colorTween = ColorTween(begin: currentColor,
-            end: appColors[cardIndex]);
-      }
+    Animation animationFromCenterToStart =
+    new Tween(begin: centerX, end: startX).animate(animationController);
+
+    Animation animationFromCenterToCenter =
+    new Tween(begin: centerX, end: centerX).animate(animationController);
+
+    Animation animationFromCenterToEnd =
+    new Tween(begin: centerX, end: endX).animate(animationController);
+
+    Animation animationFromEndToStart =
+    new Tween(begin: endX, end: startX).animate(animationController);
+
+    Animation animationFromEndToCenter =
+    new Tween(begin: endX, end: centerX).animate(animationController);
+
+    Animation animationFromEndToEnd =
+    new Tween(begin: endX, end: endX).animate(animationController);
+
+    switch (mIndex) {
+      case 0:
+        {
+          print(oldIndex);
+          if (oldIndex == 1) {
+            mAnimation = animationFromCenterToStart;
+          } else if (oldIndex == 2) {
+            mAnimation = animationFromCenterToStart;
+          } else {
+            mAnimation = animationFromStartToStart;
+          }
+        }
+        break;
+      case 1:
+        {
+          print(oldIndex);
+          if (oldIndex == 0) {
+            mAnimation = animationFromStartToCenter;
+          } else if (oldIndex == 2) {
+            mAnimation = animationFromEndToCenter;
+          } else {
+            mAnimation = animationFromCenterToCenter;
+          }
+        }
+        break;
+      case 2:
+        {
+          print(oldIndex);
+          if (oldIndex == 0) {
+            mAnimation = animationFromStartToEnd;
+          } else if (oldIndex == 1) {
+            mAnimation = animationFromCenterToEnd;
+          } else {
+            mAnimation = animationFromEndToEnd;
+          }
+        }
+        break;
     }
-    setState(() {
-      scrollController.animateTo((cardIndex)*222.0, duration: Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
-    });
 
-    colorTween.animate(curvedAnimation);
-
-    animationController.forward( );
-
-  }
-
-
-  Widget _containerList(){
-
-    var cardsList = [
-      _resumeActivities(),
-      _resumeCusts(),
-      _resumeManager()
-    ];
-
-
-    return Container(
-      height: 350.0,
-      child: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: 3,
-        controller: scrollController,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, position) {
-          return GestureDetector(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                child: Container(
-                  width: 200.0,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: cardsList[position],
+    return new AnimatedBuilder(
+      animation: animationController,
+      builder: (context, child) {
+        return new Stack(
+          fit: StackFit.expand,
+          alignment: Alignment.center,
+          overflow: Overflow.visible,
+          children: <Widget>[
+            new Material(
+              child: viewContainer[mIndex],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: new Scaffold(
+                backgroundColor: Colors.transparent,
+                bottomNavigationBar: new SafeArea(
+                  child: new ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(12.0),
+                      bottomRight: Radius.circular(24.0),
+                      bottomLeft: Radius.circular(24.0),
+                      topLeft: Radius.circular(12.0),
+                    ),
+                    child: new Container(
+                      width: double.infinity,
+                      height: 56.0,
+                      color: Colors.transparent,
+                      child: new BottomAppBar(
+                        notchMargin: 8.0,
+                        shape: new CircularNotchedRectangle(),
+                        elevation: 0.0,
+                        color: const Color(0xFFF0F0F0),
+                        child: new Stack(
+                          fit: StackFit.expand,
+                          overflow: Overflow.visible,
+                          children: <Widget>[
+                            new Positioned(
+                              width: width - 32.0,
+                              height: 56.0,
+                              child: new Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  new IconButton(
+                                    icon: iconList[0],
+                                    onPressed: () {
+                                      return onTabTapped(0);
+                                    },
+                                    color: mIndex == 0
+                                        ? Colors.transparent
+                                        : const Color(0xFF546B7F),
+                                  ),
+                                  new IconButton(
+                                    icon: iconList[1],
+                                    onPressed: () {
+                                      return onTabTapped(1);
+                                    },
+                                    color: mIndex == 1
+                                        ? Colors.transparent
+                                        : const Color(0xFF546B7F),
+                                  ),
+                                  new IconButton(
+                                    icon: iconList[2],
+                                    onPressed: () {
+                                      return onTabTapped(2);
+                                    },
+                                    color: mIndex == 2
+                                        ? Colors.transparent
+                                        : const Color(0xFF546B7F),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0)
+                floatingActionButtonAnimator:
+                CustomFloatingActionButtonAnimator.scaling,
+                floatingActionButtonLocation: new StartDocked(
+                  additionalMargin: 24.0,
+                  fabX: mAnimation.value,
+                ),
+                floatingActionButton: new FloatingActionButton(
+                  onPressed: () {},
+                  child: fabIconList[mIndex],
+                  elevation: 0.0,
+                  highlightElevation: 0.0,
+                  backgroundColor: const Color(0xFFF0F0F0),
                 ),
               ),
-            ),
-            onHorizontalDragEnd: (details) => controlEnds(details),
-          );
-        },
-      ),
+            )
+          ],
+        );
+      },
     );
   }
-
-  _resumeActivities(){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          child: Text("Cronograma", style: TextStyle(fontSize: 24.0),),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          child: Text("32% das atividade concluidas", style: TextStyle(color: Colors.grey),),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: LinearProgressIndicator(value: 0.32,),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          child: Text("Em Execução:\tFundação - montagem das vigas - 30/04\n\nProximas:\t\tFundação - nivel do contrapiso - 02/05", style: TextStyle(fontSize: 8.0, color: Colors.grey),),
-        ),
-      ],
-    );
-  }
-
-  _resumeCusts(){
-    return  Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          child: Text("Custos", style: TextStyle(fontSize: 24.0),),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          child: Text("45% do orçamento consumido", style: TextStyle(color: Colors.grey),),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: LinearProgressIndicator(value: 0.45,),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          child: Text("Ultimos gastos:\n\tFundação - concreto usinado - 4500,00\n\tFundação - ferro - 1800,00", style: TextStyle(fontSize: 8.0, color: Colors.grey),),
-        ),
-      ],
-    );
-  }
-
-  _resumeManager(){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          child: Text("Gerencial", style: TextStyle(fontSize: 24.0),),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          child: Text("32% concluido", style: TextStyle(color: Colors.grey),),
-        ),
-
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: LinearProgressIndicator(value: 0.32,),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          child: Text("Proximos Pagamentos:\n\tCastelo Forte - 30/04 - 2750,00\n\tFerragens Pinheiro - 02/05 - 3250,00\n\nProximas Recebimentos:\n\t\tEntrega da fundação - 02/05 - 5000,00", style: TextStyle(fontSize: 8.0, color: Colors.grey),),
-        ),
-      ],
-    );
-  }
-
 }
