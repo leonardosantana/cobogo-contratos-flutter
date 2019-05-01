@@ -63,7 +63,6 @@ class _ActivityScreenState extends State<ActivityScreen> {
                   lineWidth: 5.0,
                   lineColor: Colors.white,
                 ),
-
              ],
             )
           )
