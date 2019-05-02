@@ -1,5 +1,5 @@
 import 'package:fcobogo_contratos/model/contract.dart';
-import 'package:fcobogo_contratos/ui/detail/detail_page.dart';
+import 'package:fcobogo_contratos/ui/activity/activity_screen.dart';
 import 'package:fcobogo_contratos/ui/detail/separator.dart';
 import 'package:fcobogo_contratos/ui/common/contract_summary.dart';
 import 'package:fcobogo_contratos/ui/text_style.dart';
@@ -230,7 +230,7 @@ class _ResumePage extends State<ResumePage> with TickerProviderStateMixin{
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DetailPage(contract),
+                  builder: (context) => ActivityScreen(),
                 ),
               );
             },
@@ -247,7 +247,18 @@ class _ResumePage extends State<ResumePage> with TickerProviderStateMixin{
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          child: Text("Cronograma", style: TextStyle(fontSize: 24.0),),
+          child: Hero(
+            tag: "activities-hero",
+            child:  Material(
+              color: Colors.transparent,
+              child: Text(
+                "Cronograma",
+                style: TextStyle(
+                    fontSize: 20.0
+                ),
+              ),
+            ),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
