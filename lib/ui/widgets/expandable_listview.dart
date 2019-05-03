@@ -14,10 +14,16 @@ class ExpandableListView extends StatelessWidget {
             (i) => ExpansionTile(
           title: Text(_contractPhases[i].name, style: TextStyle(color: Colors.white)),
           children: _contractPhases[i].activitiesList
-              .map((data) => ListTile(
+              .map((data) =>  ListTile(
             leading: Icon(Icons.business_center, color: Colors.blue),
-            title: Text(data.name, style: TextStyle(color: Colors.white)),
-            subtitle: Text(data.details, style: TextStyle(color: Colors.white)),
+            title: Text("${data.id} - ${data.name}", style: TextStyle(color: Colors.white)),
+            subtitle: Text(
+                "${data.startDate.day}/${data.startDate.month} ${data.endDate.day}/${data.endDate.month} - ${data.days} ${data.predecessors}",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12
+                )
+            ),
           ))
               .toList(),
         ));
