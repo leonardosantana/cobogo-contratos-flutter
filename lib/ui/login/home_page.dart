@@ -1,11 +1,22 @@
+import 'package:fcobogo_contratos/model/contract.dart';
 import 'package:fcobogo_contratos/ui/home/gradient_app_bar.dart';
 import 'package:fcobogo_contratos/ui/home/home_page_body.dart';
 import 'package:flutter/material.dart';
 
+import '../new_contract.dart';
 
-class HomePage extends StatelessWidget {
+
+class HomePage extends StatefulWidget {
 
   static String tag = 'ui.homw-page';
+
+  @override
+  _HomePage createState() => _HomePage();
+}
+
+class _HomePage extends State<HomePage> {
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +27,23 @@ class HomePage extends StatelessWidget {
           new HomePageBody(),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          _showNewContractPage();
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.red,
+      ),
     );
+  }
+
+
+  void _showNewContractPage() async{
+
+    final contract = await Navigator.push(context,
+        MaterialPageRoute(builder: (context)=> NewContractPage())
+    );
+
   }
 }
 
