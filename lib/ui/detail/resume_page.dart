@@ -86,7 +86,7 @@ class _ResumePage extends State<ResumePage> with TickerProviderStateMixin{
 
   Container _getBackground () {
     return new Container(
-      child: new Image.network(contract.picture,
+      child: new Image.network(contract.imageBackgroundPath,
         fit: BoxFit.cover,
         height: 300.0,
       ),
@@ -117,8 +117,7 @@ class _ResumePage extends State<ResumePage> with TickerProviderStateMixin{
     return ListView(
       padding: EdgeInsets.fromLTRB(0.0, 72.0, 0.0, 32.0),
       children: <Widget>[
-        ContractSummary(contract,
-          horizontal: false,
+        ContractSummary(contract
         ),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 32.0),

@@ -3,7 +3,7 @@ import 'package:fcobogo_contratos/ui/home/gradient_app_bar.dart';
 import 'package:fcobogo_contratos/ui/home/home_page_body.dart';
 import 'package:flutter/material.dart';
 
-import '../new_contract.dart';
+import 'package:fcobogo_contratos/ui/contract/new_contract.dart';
 
 
 class HomePage extends StatefulWidget {

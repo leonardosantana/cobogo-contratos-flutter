@@ -1,5 +1,6 @@
-import 'package:fcobogo_contratos/model/Activity.dart';
-import 'package:fcobogo_contratos/model/Phase.dart';
+import 'package:fcobogo_contratos/model/activity.dart';
+import 'package:fcobogo_contratos/model/cust.dart';
+import 'package:fcobogo_contratos/model/phase.dart';
 import 'package:fcobogo_contratos/ui/home/gradient_app_bar.dart';
 import 'package:fcobogo_contratos/ui/widgets/expandable_listview.dart';
 import 'package:flutter/material.dart';
@@ -28,22 +29,21 @@ class _ActivityScreenState extends State<ActivityScreen> {
     startDate = endDate.subtract(duration);
 
     _projectActivities = [
-      Activity(1, 5, startDate, endDate, "Projeto de arquitetura", null),
-      Activity(2, 5, startDate, endDate, "Projeto de estrutura", null),
-      Activity(3, 5, startDate, endDate, "Projeto de hidraulica", null),
-      Activity(4, 5, startDate, endDate, "Projeto de eletrico", null)
+      Activity("Projeto de arquitetura", "aslkdaslkd alksdjassl kd ", startDate, endDate, Cust(100.00, 100.00, 100.00), null, 0, null),
+      Activity("Projeto de arquitetura", "aslkdaslkd alksdjassl kd ", startDate, endDate, Cust(100.00, 100.00, 100.00), null, 0, null),
+      Activity("Projeto de arquitetura", "aslkdaslkd alksdjassl kd ", startDate, endDate, Cust(100.00, 100.00, 100.00), null, 0, null),
     ];
 
-    _projetos = Phase("Projetos", _projectActivities);
+    _projetos = Phase("Projetos","Elaboração de projetos", _projectActivities);
 
     _basesActivities = [
-     Activity(1, 5, startDate, endDate, "Canteiro de obra", null),
-     Activity(1, 5, startDate, endDate, "Fundações rasas", null),
-     Activity(1, 5, startDate, endDate, "Arranque dos pilares", null),
-     Activity(1, 5, startDate, endDate, "Impermeabilização das fundações", null),
-     Activity(1, 5, startDate, endDate, "Compactação do solo e piso grosso", null)
+      Activity("Canteiro de obra", "aslkdaslkd alksdjassl kd ", startDate, endDate, Cust(100.00, 100.00, 100.00), null, 0, null),
+      Activity("Fundações rasas", "aslkdaslkd alksdjassl kd ", startDate, endDate, Cust(100.00, 100.00, 100.00), null, 0, null),
+      Activity("Arranque dos pilares", "aslkdaslkd alksdjassl kd ", startDate, endDate, Cust(100.00, 100.00, 100.00), null, 0, null),
+      Activity("Impermeabilização das fundações", "aslkdaslkd alksdjassl kd ", startDate, endDate, Cust(100.00, 100.00, 100.00), null, 0, null),
+      Activity("Compactação do solo e piso grosso", "aslkdaslkd alksdjassl kd ", startDate, endDate, Cust(100.00, 100.00, 100.00), null, 0, null),
     ];
-    _bases = Phase("Fundações", _basesActivities);
+    _bases = Phase("Fundações", "construção das fundações", _basesActivities);
 
     _contractPhases = [_projetos, _bases];
 

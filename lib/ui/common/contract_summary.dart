@@ -25,7 +25,7 @@ class ContractSummary extends StatelessWidget {
       child: new Hero(
         tag: "contract-hero-${contract.name}",
         child: new Image(
-          image: new AssetImage(contract.image),
+          image: new AssetImage(contract.imagePath),
           height: 92.0,
           width: 92.0,
         ),
@@ -57,7 +57,7 @@ class ContractSummary extends StatelessWidget {
           new Container(height: 4.0),
           new Text(contract.name, style: Style.titleTextStyle),
           new Container(height: 10.0),
-          new Text(contract.address, style: Style.commonTextStyle),
+          new Text(contract.address.address, style: Style.commonTextStyle),
           new Separator(),
           new Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -65,7 +65,7 @@ class ContractSummary extends StatelessWidget {
               new Expanded(
                   flex: horizontal ? 1 : 0,
                   child: _contractValue(
-                      value: contract.progress.toString(),
+                      value: "40%",
                       image: 'assets/images/ic_distance.png')
 
               ),
@@ -75,7 +75,7 @@ class ContractSummary extends StatelessWidget {
               new Expanded(
                   flex: horizontal ? 1 : 0,
                   child: _contractValue(
-                      value: contract.cust.toString(),
+                      value: contract.stimatedCust.toString(),
                       image: 'assets/images/ic_gravity.png')
               )
             ],
