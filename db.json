@@ -1,24 +1,31 @@
-[
+{
+  "posts": [
     {
-        "_id": {
-            "timestamp": 1557005957,
-            "machineIdentifier": 3269509,
-            "processIdentifier": 21964,
-            "counter": 16419247,
-            "time": 1557005957000,
-            "date": 1557005957000,
-            "timeSecond": 1557005957
-        },
-        "user": null,
-        "name": "Casa 7",
-        "address": null,
-        "value": 220,
-        "stimatedCust": 150,
-        "totalArea": 200,
-        "startDate": null,
-        "deliveryDate": null,
-        "details": null,
-        "phases": null,
-        "activities": null
+      "id": 1,
+      "title": "Post 1"
+    },
+    {
+      "id": 2,
+      "title": "Post 2"
+    },
+    {
+      "id": 3,
+      "title": "Post 3"
     }
-]
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    },
+    {
+      "id": 2,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
