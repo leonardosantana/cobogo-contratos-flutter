@@ -1,6 +1,5 @@
 
 
-import 'package:fcobogo_contratos/model/Phase.dart';
 import 'package:fcobogo_contratos/model/cust.dart';
 
 class Activity {

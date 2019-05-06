@@ -46,7 +46,7 @@ class ContractProvider{
           responseData[i]["deliveryDate"],
           responseData[i]["details"],
           "assets/images/houseBuild.png",
-          responseData[i]["imageBackgroundPath"],
+          "https://images.freeimages.com/images/large-previews/f3e/building-1522324.jpg",
           responseData[i]["phases"]);
 
       contracts.add(contract);

@@ -1,7 +1,6 @@
 import 'package:fcobogo_contratos/model/activity.dart';
 import 'package:fcobogo_contratos/model/cust.dart';
 import 'package:fcobogo_contratos/model/phase.dart';
-import 'package:fcobogo_contratos/ui/home/gradient_app_bar.dart';
 import 'package:fcobogo_contratos/ui/widgets/expandable_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sparkline/flutter_sparkline.dart';
@@ -48,14 +47,6 @@ class _ActivityScreenState extends State<ActivityScreen> {
     _contractPhases = [_projetos, _bases];
 
   }
-
-
-
-
-
-
-
-
 
   @override
 

@@ -1,8 +1,10 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:fcobogo_contratos/model/contract.dart';
 import 'package:fcobogo_contratos/repository/contract_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-class ContractBloc {
+class ContractBloc implements BlocBase{
+
   final ContractRepository _repository = ContractRepository();
   final BehaviorSubject<List> _subject =
   BehaviorSubject<List>();

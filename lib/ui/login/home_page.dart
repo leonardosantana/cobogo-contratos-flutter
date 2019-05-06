@@ -21,6 +21,7 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+
       body: new Column(
         children: <Widget>[
           new GradientAppBar("Cobogó"),
@@ -41,7 +42,7 @@ class _HomePage extends State<HomePage> {
   void _showNewContractPage() async{
 
     final contract = await Navigator.push(context,
-        MaterialPageRoute(builder: (context)=> NewContractPage())
+        MaterialPageRoute(builder: (context)=> ContractForm())
     );
 
   }
