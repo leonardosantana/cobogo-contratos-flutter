@@ -1,56 +1,46 @@
-
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:fcobogo_contratos/blocs/new_contract_bloc.dart';
 import 'package:fcobogo_contratos/provider/provider.dart';
 import 'package:fcobogo_contratos/ui/login/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
 
-class ContractForm extends StatelessWidget{
-
+class ContractForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return NewContractProvider(
       child: MaterialApp(
         home: Scaffold(
           appBar: AppBar(
-            title: Text("Novo COntrato"),
+            title: Text("Novo Contrato"),
           ),
-          body: Column(
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  color: new Color(0xFF736AB7),
-                  child: Padding(
-                    padding: EdgeInsets.all(25),
-                    child: ListView(
-                      children: <Widget>[
-                        newSubject("Dados do contrato"),
-                        contractNameField(newContractBloc),
-                        detailsField(newContractBloc),
-                        addressField(newContractBloc),
-                        valueField(newContractBloc),
-                        estimatedCustField(newContractBloc),
-                        totalAreaField(newContractBloc),
-                        startDateField(newContractBloc),
-                        deliveryDateField(newContractBloc),
-                        phasesField(newContractBloc),
-                        Container(
-                          margin: EdgeInsets.only(top: 25.0),
-                        ),
-                        submitButton(newContractBloc),
-                      ],
-                    ),
+          backgroundColor: Color(0xFF736AB7),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(25),
+              child: Column(
+                children: <Widget>[
+                  newSubject("Dados do contrato"),
+                  contractNameField(newContractBloc),
+                  detailsField(newContractBloc),
+                  addressField(newContractBloc),
+                  valueField(newContractBloc),
+                  estimatedCustField(newContractBloc),
+                  totalAreaField(newContractBloc),
+                  startDateField(newContractBloc),
+                  deliveryDateField(newContractBloc),
+                  phasesField(newContractBloc),
+                  Container(
+                    margin: EdgeInsets.only(top: 25.0),
                   ),
-                )
-              )
-            ],
+                  submitButton(newContractBloc),
+                ],
+              ),
+            ),
           ),
-        )
-      )
+        ),
+      ),
     );
   }
 
@@ -93,8 +83,8 @@ class ContractForm extends StatelessWidget{
         return RaisedButton(
           child: Text('Salvar Contrato'),
           color: Colors.blue,
-          onPressed: (){
-            if(!snapshot.hasData){
+          onPressed: () {
+            if (!snapshot.hasData) {
               return null;
             }
 
@@ -119,7 +109,6 @@ class ContractForm extends StatelessWidget{
         )
       ],
     );
-
   }
 
   addressField(NewContractBloc bloc) {
@@ -138,21 +127,17 @@ class ContractForm extends StatelessWidget{
   }
 
   valueField(NewContractBloc bloc) {
-
-
     return StreamBuilder(
-      stream: bloc.value,
-      builder: (context, snapshot) {
-        return TextField(
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            hintText: '250.000,00',
-            labelText: 'Valor',
-            errorText: snapshot.error,
-          )
-        );
-      }
-    );
+        stream: bloc.value,
+        builder: (context, snapshot) {
+          return TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                hintText: '250.000,00',
+                labelText: 'Valor',
+                errorText: snapshot.error,
+              ));
+        });
   }
 
   estimatedCustField(NewContractBloc bloc) {
@@ -165,10 +150,8 @@ class ContractForm extends StatelessWidget{
                 hintText: '250.000,00',
                 labelText: 'Custo estimado',
                 errorText: snapshot.error,
-              )
-          );
-        }
-    );
+              ));
+        });
   }
 
   totalAreaField(NewContractBloc bloc) {
@@ -181,10 +164,8 @@ class ContractForm extends StatelessWidget{
                 hintText: '200,00',
                 labelText: 'Área do projeto',
                 errorText: snapshot.error,
-              )
-          );
-        }
-    );
+              ));
+        });
   }
 
   startDateField(NewContractBloc bloc) {
@@ -197,12 +178,9 @@ class ContractForm extends StatelessWidget{
             format: DateFormat('dd/MM/yyyy'),
             editable: true,
             decoration: InputDecoration(
-                labelText: 'Data de início',
-                hasFloatingPlaceholder: false
-            ),
+                labelText: 'Data de início', hasFloatingPlaceholder: false),
           );
-        }
-    );
+        });
   }
 
   deliveryDateField(NewContractBloc bloc) {
@@ -215,12 +193,9 @@ class ContractForm extends StatelessWidget{
             format: DateFormat('dd/MM/yyyy'),
             editable: true,
             decoration: InputDecoration(
-                labelText: 'Data de entrega',
-                hasFloatingPlaceholder: false
-            ),
+                labelText: 'Data de entrega', hasFloatingPlaceholder: false),
           );
-        }
-    );
+        });
   }
 
   phasesField(NewContractBloc bloc) {
@@ -234,9 +209,7 @@ class ContractForm extends StatelessWidget{
                 hintText: 'Projetos',
                 labelText: 'Fases',
                 errorText: snapshot.error,
-              )
-          );
-        }
-    );
+              ));
+        });
   }
 }
