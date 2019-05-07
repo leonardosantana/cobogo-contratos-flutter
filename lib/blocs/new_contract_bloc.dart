@@ -4,7 +4,10 @@ import 'package:fcobogo_contratos/model/contract.dart';
 import 'package:fcobogo_contratos/model/phase.dart';
 import 'package:fcobogo_contratos/repository/contract_repository.dart';
 import 'package:fcobogo_contratos/repository/new_contract_repository.dart';
+import 'package:fcobogo_contratos/ui/login/home_page.dart';
 import 'package:fcobogo_contratos/validator/new_contract_validator.dart';
+import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:rxdart/rxdart.dart';
 
 class NewContractBloc extends Object with NewContractValidator {
@@ -89,6 +92,10 @@ class NewContractBloc extends Object with NewContractValidator {
     _startDateController.close();
     _deliveryDateController.close();
     _phaseController.close();
+  }
+
+  void submitAndGoToContractsPage() async{
+    await submit();
   }
 }
 

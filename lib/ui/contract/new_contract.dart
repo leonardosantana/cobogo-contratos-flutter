@@ -1,7 +1,7 @@
 
 import 'package:fcobogo_contratos/blocs/new_contract_bloc.dart';
 import 'package:fcobogo_contratos/provider/provider.dart';
-import 'package:fcobogo_contratos/ui/home/gradient_app_bar.dart';
+import 'package:fcobogo_contratos/ui/login/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
@@ -16,9 +16,11 @@ class ContractForm extends StatelessWidget{
     return NewContractProvider(
       child: MaterialApp(
         home: Scaffold(
+          appBar: AppBar(
+            title: Text("Novo COntrato"),
+          ),
           body: Column(
             children: <Widget>[
-              GradientAppBar("Novo Contrato"),
               Expanded(
                 child: Container(
                   color: new Color(0xFF736AB7),
@@ -91,7 +93,14 @@ class ContractForm extends StatelessWidget{
         return RaisedButton(
           child: Text('Salvar Contrato'),
           color: Colors.blue,
-          onPressed: snapshot.hasData ? bloc.submit : null,
+          onPressed: (){
+            if(!snapshot.hasData){
+              return null;
+            }
+
+            bloc.submitAndGoToContractsPage();
+            Navigator.of(context).pushNamed(HomePage.tag);
+          },
         );
       },
     );
