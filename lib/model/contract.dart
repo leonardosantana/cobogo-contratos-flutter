@@ -10,7 +10,7 @@ class Contract{
 
   User user;
   String name;
-  Address address;
+  String address;
   double value;
   double stimatedCust;
   double totalArea;
@@ -39,10 +39,9 @@ class Contract{
 }
 
 User user = User("name", "pass", "email", Address("address"), null);
-Address adrress = Address("adfasfa");
 Contract contract = Contract(user,
   "casa 7",
-  adrress,
+  "adfasfa",
   20.5,
   50.7,
   200.0,

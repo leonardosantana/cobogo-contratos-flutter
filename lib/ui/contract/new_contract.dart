@@ -129,38 +129,105 @@ class ContractForm extends StatelessWidget{
   }
 
   valueField(NewContractBloc bloc) {
+
+
     return StreamBuilder(
-        stream: bloc.value,
-        builder: (context, snapshot) {
-          return TextField(
-            onChanged: bloc.changeValue,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              hintText: 'Rua dos bobos numero 0',
-              labelText: 'Endereço',
-              errorText: snapshot.error,
-            ),
-          );
-        });
+      stream: bloc.value,
+      builder: (context, snapshot) {
+        return TextField(
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            hintText: '250.000,00',
+            labelText: 'Valor',
+            errorText: snapshot.error,
+          )
+        );
+      }
+    );
   }
 
   estimatedCustField(NewContractBloc bloc) {
-
+    return StreamBuilder(
+        stream: bloc.cust,
+        builder: (context, snapshot) {
+          return TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                hintText: '250.000,00',
+                labelText: 'Custo estimado',
+                errorText: snapshot.error,
+              )
+          );
+        }
+    );
   }
 
   totalAreaField(NewContractBloc bloc) {
-
+    return StreamBuilder(
+        stream: bloc.area,
+        builder: (context, snapshot) {
+          return TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                hintText: '200,00',
+                labelText: 'Área do projeto',
+                errorText: snapshot.error,
+              )
+          );
+        }
+    );
   }
 
   startDateField(NewContractBloc bloc) {
-
+    return StreamBuilder(
+        stream: bloc.startDate,
+        builder: (context, snapshot) {
+          return DateTimePickerFormField(
+            onChanged: bloc.changeStartDate,
+            inputType: InputType.date,
+            format: DateFormat('dd/MM/yyyy'),
+            editable: true,
+            decoration: InputDecoration(
+                labelText: 'Data de início',
+                hasFloatingPlaceholder: false
+            ),
+          );
+        }
+    );
   }
 
   deliveryDateField(NewContractBloc bloc) {
-
+    return StreamBuilder(
+        stream: bloc.deliveryDate,
+        builder: (context, snapshot) {
+          return DateTimePickerFormField(
+            onChanged: bloc.changeDeliveryDate,
+            inputType: InputType.date,
+            format: DateFormat('dd/MM/yyyy'),
+            editable: true,
+            decoration: InputDecoration(
+                labelText: 'Data de entrega',
+                hasFloatingPlaceholder: false
+            ),
+          );
+        }
+    );
   }
 
   phasesField(NewContractBloc bloc) {
-
+    return StreamBuilder(
+        stream: bloc.phase,
+        builder: (context, snapshot) {
+          return TextField(
+              onChanged: bloc.changePhase,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                hintText: 'Projetos',
+                labelText: 'Fases',
+                errorText: snapshot.error,
+              )
+          );
+        }
+    );
   }
 }

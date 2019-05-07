@@ -6,7 +6,10 @@ import 'package:fcobogo_contratos/model/contract.dart';
 import 'package:dio/dio.dart';
 
 class ContractProvider{
-  final String _endpoint = "http://192.168.0.19:8080/contratos";
+
+  final String _endpointLocal = "http://192.168.0.19:8080/contratos";
+  final String _endpointHeroku = "https://cobogo-contratos.herokuapp.com/contratos";
+
   final Dio _dio = Dio();
 
   Future<List> getContracts() async {
@@ -14,10 +17,9 @@ class ContractProvider{
 
       Map<String, String> headersMap = {
         'Content-Type' : 'application/json',
-        'Authorization' : 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU1NzYyMTYwNn0.fhg5nCK7H5W5FvM6jbjuD6X0rMEiy3NtrMQ53JIRibdbVYQ_4gPBoAjP1OAg9qUkf_DFIxmlPeaKAw71ZbO7wA' ,
       };
 
-      Response response = await _dio.get(_endpoint);
+      Response response = await _dio.get(_endpointLocal);
 
       return _responseToList(response.data);
 
@@ -36,14 +38,15 @@ class ContractProvider{
 
     List<Contract> contracts = List();
     for(int i = 0; i < responseData.length; i++){
+
       Contract contract = Contract(null,
           responseData[i]["name"],
-          Address("asd asda aasd"),
+          responseData[i]["address"],
           responseData[i]["value"],
           responseData[i]["stimatedCust"],
           responseData[i]["totalArea"],
-          responseData[i]["startDate"],
-          responseData[i]["deliveryDate"],
+          responseData[i]["startDate"] == null ? null : DateTime(responseData[i]["startDate"]),
+          responseData[i]["deliveryDate"] == null ? null : DateTime(responseData[i]["deliveryDate"]),
           responseData[i]["details"],
           "assets/images/houseBuild.png",
           "https://images.freeimages.com/images/large-previews/f3e/building-1522324.jpg",

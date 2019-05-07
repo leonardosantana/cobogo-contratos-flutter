@@ -57,7 +57,7 @@ class ContractSummary extends StatelessWidget {
           new Container(height: 4.0),
           new Text(contract.name, style: Style.titleTextStyle),
           new Container(height: 10.0),
-          new Text(contract.address.address, style: Style.commonTextStyle),
+          new Text(contract.address == null ? "" : contract.address, style: Style.commonTextStyle),
           new Separator(),
           new Row(
             mainAxisAlignment: MainAxisAlignment.center,
