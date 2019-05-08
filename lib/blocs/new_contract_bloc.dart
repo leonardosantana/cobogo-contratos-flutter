@@ -4,10 +4,7 @@ import 'package:fcobogo_contratos/model/contract.dart';
 import 'package:fcobogo_contratos/model/phase.dart';
 import 'package:fcobogo_contratos/repository/contract_repository.dart';
 import 'package:fcobogo_contratos/repository/new_contract_repository.dart';
-import 'package:fcobogo_contratos/ui/login/home_page.dart';
 import 'package:fcobogo_contratos/validator/new_contract_validator.dart';
-import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:rxdart/rxdart.dart';
 
 class NewContractBloc extends Object with NewContractValidator {
@@ -24,7 +21,7 @@ class NewContractBloc extends Object with NewContractValidator {
   final _deliveryDateController = BehaviorSubject<DateTime>();
   final _phaseController = BehaviorSubject<String>();
 
-  final BehaviorSubject<Contract> _subject = BehaviorSubject<Contract>();
+  final BehaviorSubject<bool> _subject = BehaviorSubject<bool>();
 
   // Add data to stream
   Stream<String> get contractName => _contractNameController.stream.transform(validateContractName);
@@ -77,7 +74,7 @@ class NewContractBloc extends Object with NewContractValidator {
         null
     );
 
-    Contract response = await _repository.saveContract(contract);
+    bool response = await _repository.saveContract(contract);
     _subject.sink.add(response);
 
   }
@@ -94,9 +91,6 @@ class NewContractBloc extends Object with NewContractValidator {
     _phaseController.close();
   }
 
-  void submitAndGoToContractsPage() async{
-    await submit();
-  }
 }
 
 //Note: This creates a global instance of Bloc that's automatically exported and can be accessed anywhere in the app

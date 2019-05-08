@@ -83,16 +83,19 @@ class ContractForm extends StatelessWidget {
         return RaisedButton(
           child: Text('Salvar Contrato'),
           color: Colors.blue,
-          onPressed: () {
-            if (!snapshot.hasData) {
-              return null;
+          onPressed: (){
+            if(snapshot.hasData){
+              bloc.submit();
+              Navigator.pop(context);
+              Navigator.push(context, new MaterialPageRoute(
+                  builder: (context) =>
+                  new HomePage())
+              );
             }
 
-            bloc.submitAndGoToContractsPage();
-            Navigator.of(context).pushNamed(HomePage.tag);
-          },
+          }
         );
-      },
+      }
     );
   }
 

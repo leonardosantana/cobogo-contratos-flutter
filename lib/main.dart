@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 void main() => runApp(CobogoContratos());
 
 class CobogoContratos extends StatelessWidget {
+
 final routes = <String, WidgetBuilder>{
   LoginPage.tag: (context) => LoginPage(),
   HomePage.tag: (context) => HomePage()

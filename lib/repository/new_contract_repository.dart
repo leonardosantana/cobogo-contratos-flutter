@@ -10,7 +10,7 @@ class NewContractRepository{
 
   final Dio _dio = Dio();
 
-  Future<Contract> saveContract(Contract contract) async{
+  Future<bool> saveContract(Contract contract) async{
 
     try {
 
@@ -32,7 +32,7 @@ class NewContractRepository{
         "phases": contract.phases
       });
 
-      return response.data;
+      return true;
 
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");

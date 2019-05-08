@@ -8,7 +8,7 @@ import 'package:fcobogo_contratos/ui/contract/new_contract.dart';
 
 class HomePage extends StatefulWidget {
 
-  static String tag = 'ui.homw-page';
+  static String tag = 'ui.home-page';
 
   @override
   _HomePage createState() => _HomePage();
