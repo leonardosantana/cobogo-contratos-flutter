@@ -12,16 +12,21 @@ class _HomePageBodyState extends State<HomePageBody> {
 
   @override
   void initState() {
+    
     super.initState();
     contract_bloc.getContracts();
+    
   }
 
   @override
   Widget build(BuildContext context) {
+    
     return StreamBuilder<List>(
+      
       stream: contract_bloc.subject.stream,
       builder: (context, AsyncSnapshot<List> snapshot) {
         if (snapshot.hasData) {
+          
           if (snapshot.data == null){
             return _buildErrorWidget("Erro ao inicializar dados");
           }
@@ -37,14 +42,17 @@ class _HomePageBodyState extends State<HomePageBody> {
   }
 
   Widget _buildLoadingWidget() {
+    
     return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [Text("Loading data from API..."), CircularProgressIndicator()],
         ));
+    
   }
 
   Widget _buildErrorWidget(String error) {
+    
     return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -52,6 +60,7 @@ class _HomePageBodyState extends State<HomePageBody> {
             Text("Error occured: $error"),
           ],
         ));
+    
   }
 
   Widget _buildContractsWidget(List contracts){
@@ -67,7 +76,9 @@ class _HomePageBodyState extends State<HomePageBody> {
               sliver: new SliverFixedExtentList(
                 itemExtent: 152.0,
                 delegate: new SliverChildBuilderDelegate(
+                  
                       (context, index) => new ContractSummary(contracts[index]),
+                  
                   childCount: contracts.length,
 
                 ),
